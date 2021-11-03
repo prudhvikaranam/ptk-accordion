@@ -5,15 +5,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ptk-accordian</title>
-    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css"
+    />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <i class='fas fa-angle-double-down'></i>
-
-       <ptk-accordian
-        id="ptk-accordian" addToggleArrows = true  showArrow = "" hideArrow = ""
-        data-accordian='[
+    <ptk-accordian
+      id="ptk-accordian"
+      addToggleArrows="false"
+      data-accordian='[
     {
       "headerName": "accordian 1",
       "data" : "Hellooooooooooo111111111111111111111111kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkjjjjjjjjjjjjjjjj1"
@@ -22,10 +24,15 @@
       "headerName": "accordian 2",
       "data" : "Helloooooooooooo22222222222222222222222222222222"
     }]'
-      >
-      </ptk-accordian>
+    >
+      <head>
+        <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css"
+        />
+      </head>
+    </ptk-accordian>
 
-    
     <script src="script.js"></script>
   </body>
 </html>

@@ -1,10 +1,16 @@
 const template = document.createElement("template");
+let hasCustomArrows;
+let showArrow;
+let hideArrow;
 template.innerHTML = `
 <head>
     <link rel="stylesheet" href="accordian.css" />
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css"
+  />
 </head>
 <div class="ptk-accordian-container" id="ptk-accordian-container">
-
 </div>`;
 const accordianData =
   document.getElementById("ptk-accordian").dataset.accordian;
@@ -17,25 +23,39 @@ class ptfAccordian extends HTMLElement {
     this.shadowRoot.appendChild(template.content.cloneNode(true));
   }
   connectedCallback() {
-    let a = 0;
+    console.log(this.querySelector("#showArrow"));
+    showArrow = this.querySelector("#showArrow").innerHTML;
+    if (this.getAttribute("addToggleArrows") == "true") {
+      hasCustomArrows = true;
+      this.render();
+    } else if (this.getAttribute("addToggleArrows") == "false") {
+      hasCustomArrows = false;
+      this.render();
+    } else {
+      hasCustomArrows = false;
+      this.render();
+    }
+  }
+  render() {
     convertedData.forEach((data, i) => {
-      a = i;
       const accordian = document.createElement("div");
       accordian.classList = `accordian accordian-${i}`;
       accordian.id = `accordian`;
       accordian.innerHTML = `
             <div class="accordian-head" id="accordian-head">
               <span><h1 class="header">${data.headerName}</h1></span>
-              <span class="toggleData" id="toggleData">Show</span>
+              ${
+                hasCustomArrows
+                  ? `<span class="toggleData" id="toggleData"> <i class="fa fa-angle-down custom"></i></span>`
+                  : `<span class="toggleData" id="toggleData">Show</span>`
+              }
             </div>
             <div class="accordian-data" id="accordian-data">
               <p class="data" id="data">${data.data}</p>
             </div>
         `;
 
-      this.shadowRoot
-        .getElementById("ptk-accordian-container")
-        .appendChild(accordian);
+      this.shadowRoot.appendChild(accordian);
     });
     this.shadowRoot.querySelectorAll("#toggleData").forEach((data, i) => {
       data.addEventListener("click", () => {
@@ -46,10 +66,14 @@ class ptfAccordian extends HTMLElement {
 
         if (getDataClass.contains("show")) {
           getDataClass.remove("show");
-          getButtonContent.innerHTML = "Show";
+          getButtonContent.innerHTML = hasCustomArrows
+            ? ' <i class="fa fa-angle-down custom"></i>'
+            : "Show";
         } else {
           getDataClass.add("show");
-          getButtonContent.innerHTML = "Hide";
+          getButtonContent.innerHTML = hasCustomArrows
+            ? '<i class="fa fa-angle-up custom"></i>'
+            : "Hide";
         }
       });
     });
@@ -57,4 +81,3 @@ class ptfAccordian extends HTMLElement {
 }
 
 window.customElements.define("ptk-accordian", ptfAccordian);
-
