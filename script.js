@@ -22,6 +22,9 @@ class ptfAccordion extends HTMLElement {
     this.shadowRoot.appendChild(template.content.cloneNode(true));
   }
   connectedCallback() {
+    let getDefaultAccordionValue = this.getAttribute(
+      "showDefaultAccordionIndex"
+    ).trim();
     if (this.getAttribute("toggleIcons") == "true") {
       hasCustomArrows = true;
       this.render();
@@ -32,13 +35,19 @@ class ptfAccordion extends HTMLElement {
       hasCustomArrows = false;
       this.render();
     }
-    if (this.getAttribute("showDefaultAccordion")) {
+    if (getDefaultAccordionValue) {
       this.openDefault();
+    } else if (getDefaultAccordionValue == "") {
+      console.warn(
+        `Warning: showDefaultAccordionIndex attribute has be defined but no value has been assigned`
+      );
     }
   }
 
   openDefault() {
-    const getDefaultAccordionIndex = +this.getAttribute("showDefaultAccordion");
+    const getDefaultAccordionIndex = +this.getAttribute(
+      "showDefaultAccordionIndex"
+    );
     this.shadowRoot
       .querySelectorAll(".accordion-data")
       [getDefaultAccordionIndex].classList.add("active");
