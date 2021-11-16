@@ -1,28 +1,28 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap");
 
-.ptk-accordian-container {
+.ptk-accordion-container {
   font-family: "Roboto", sans-serif;
   width: 50%;
 }
-.accordian {
+.accordion {
   background-color: cadetblue;
   padding: 10px;
   margin: 0px;
   border: 1px solid white;
 }
-.accordian-header {
+.accordion-header {
   color: black;
 }
-.accordian-head {
+.accordion-head {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.accordian-data {
+.accordion-data {
   word-break: break-word;
   max-height: 0;
   overflow: hidden;
 }
-.accordian-data.active {
+.accordion-data.active {
   max-height: 200px;
 }

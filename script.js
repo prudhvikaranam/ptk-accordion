@@ -4,18 +4,18 @@ let showArrow;
 let hideArrow;
 template.innerHTML = `
 <head>
-    <link rel="stylesheet" href="accordian.css" />
+    <link rel="stylesheet" href="accordion.css" />
    
 </head>
-<div class="ptk-accordian-container" id="ptk-accordian-container">
+<div class="ptk-accordion-container" id="ptk-accordion-container">
 </div>`;
-const accordianData =
-  document.getElementById("ptk-accordian").dataset.accordian;
-const convertedData = JSON.parse(JSON.parse(JSON.stringify(accordianData)));
-const getAccordian = document.getElementById("ptk-accordian");
-const showMultiple = getAccordian.getAttribute("showMultiple");
+const accordionData =
+  document.getElementById("ptk-accordion").dataset.accordion;
+const convertedData = JSON.parse(JSON.parse(JSON.stringify(accordionData)));
+const getAccordion = document.getElementById("ptk-accordion");
+const showMultiple = getAccordion.getAttribute("showMultiple");
 
-class ptfAccordian extends HTMLElement {
+class ptfAccordion extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: "open" });
@@ -32,15 +32,15 @@ class ptfAccordian extends HTMLElement {
       hasCustomArrows = false;
       this.render();
     }
-    if (this.getAttribute("showDefaultAccordian")) {
+    if (this.getAttribute("showDefaultAccordion")) {
       this.openDefault();
     }
   }
 
   openDefault() {
-    const getDefaultAccordionIndex = +this.getAttribute("showDefaultAccordian");
+    const getDefaultAccordionIndex = +this.getAttribute("showDefaultAccordion");
     this.shadowRoot
-      .querySelectorAll(".accordian-data")
+      .querySelectorAll(".accordion-data")
       [getDefaultAccordionIndex].classList.add("active");
     this.shadowRoot.querySelectorAll("#togglers")[
       getDefaultAccordionIndex
@@ -50,42 +50,42 @@ class ptfAccordian extends HTMLElement {
   render() {
     convertedData.forEach((data, i) => {
       //Used for creating a the accordion along with the togglers.
-      let createMultipleShowArrowSlots = getAccordian.appendChild(
+      let createMultipleShowArrowSlots = getAccordion.appendChild(
         document.createElement("div")
       );
       createMultipleShowArrowSlots.setAttribute("slot", `showArrow ${i}`);
 
       createMultipleShowArrowSlots.innerHTML = this.getAttribute("showArrow");
 
-      let createMultipleHideArrowSlots = getAccordian.appendChild(
+      let createMultipleHideArrowSlots = getAccordion.appendChild(
         document.createElement("div")
       );
       createMultipleHideArrowSlots.setAttribute("slot", `hideArrow ${i}`);
       createMultipleHideArrowSlots.innerHTML = this.getAttribute("hideArrow");
 
-      const accordian = document.createElement("div");
-      accordian.classList = `accordian accordian-${i}`;
-      accordian.id = `accordian`;
-      accordian.innerHTML = `
-            <div class="accordian-head" id="accordian-head">
+      const accordion = document.createElement("div");
+      accordion.classList = `accordion accordion-${i}`;
+      accordion.id = `accordion`;
+      accordion.innerHTML = `
+            <div class="accordion-head" id="accordion-head">
               <span><h1 class="header">${data.headerName}</h1></span>
               <span class="togglers" id="togglers">Show</span>
             </div>
-            <div class="accordian-data" id="accordian-data">
+            <div class="accordion-data" id="accordion-data">
               <p class="data" id="data">${data.data}</p>
             </div>
         `;
 
-      this.shadowRoot.appendChild(accordian);
+      this.shadowRoot.appendChild(accordion);
     });
 
     this.shadowRoot.querySelectorAll("#togglers").forEach((toggler, i) => {
       // for toggling and changing the text/icons
       toggler.addEventListener("click", () => {
-        let getSelectedAccordianData =
-          this.shadowRoot.querySelectorAll(".accordian-data");
+        let getSelectedAccordionData =
+          this.shadowRoot.querySelectorAll(".accordion-data");
         let slots = document.getEle;
-        getSelectedAccordianData.forEach((accData, j) => {
+        getSelectedAccordionData.forEach((accData, j) => {
           if (j == i) {
             accData.classList.toggle("active");
             if (accData.classList.contains("active")) {
@@ -105,4 +105,4 @@ class ptfAccordian extends HTMLElement {
   }
 }
 
-window.customElements.define("ptk-accordian", ptfAccordian);
+window.customElements.define("ptk-accordion", ptfAccordion);
