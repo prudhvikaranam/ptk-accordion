@@ -66,10 +66,11 @@ class ptfAccordian extends HTMLElement {
     });
 
     this.shadowRoot.querySelectorAll("#togglers").forEach((toggler, i) => {
+      // for toggling and changing the text/icons
       toggler.addEventListener("click", () => {
         let getSelectedAccordianData =
           this.shadowRoot.querySelectorAll(".accordian-data");
-        let getButtonContent = this.shadowRoot.querySelectorAll("#togglers")[i];
+        let slots = document.getEle;
         getSelectedAccordianData.forEach((accData, j) => {
           if (j == i) {
             accData.classList.toggle("active");
