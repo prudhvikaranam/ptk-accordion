@@ -32,7 +32,21 @@ class ptfAccordian extends HTMLElement {
       hasCustomArrows = false;
       this.render();
     }
+    if (this.getAttribute("showDefaultAccordian")) {
+      this.openDefault();
+    }
   }
+
+  openDefault() {
+    const getDefaultAccordionIndex = +this.getAttribute("showDefaultAccordian");
+    this.shadowRoot
+      .querySelectorAll(".accordian-data")
+      [getDefaultAccordionIndex].classList.add("active");
+    this.shadowRoot.querySelectorAll("#togglers")[
+      getDefaultAccordionIndex
+    ].innerHTML = "Hide";
+  }
+
   render() {
     convertedData.forEach((data, i) => {
       //Used for creating a the accordion along with the togglers.
