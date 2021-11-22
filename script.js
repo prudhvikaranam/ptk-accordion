@@ -1,7 +1,28 @@
 const template = document.createElement("template");
-let hasCustomArrows;
+const getAccordion = document.getElementById("ptk-accordion"); //get the tag from HTML
+const accordionData = getAccordion.dataset.accordion; // get the data from html tag
+const convertedData = JSON.parse(JSON.parse(JSON.stringify(accordionData))); // convert data to array
+
+let getDefaultAccordionValue; //hold the default accordion value
+if (getAccordion.hasAttribute("showDefaultAccordionIndex")) {
+  getDefaultAccordionValue = getAccordion
+    .getAttribute("showDefaultAccordionIndex")
+    .trim();
+}
+
+let showMultiple; //hold the default accordion value
+if (getAccordion.hasAttribute("showMultiple")) {
+  showMultiple = getAccordion.getAttribute("showMultiple");
+}
+let noTogglers = false;
+if (getAccordion.hasAttribute("noTogglers")) {
+  noTogglers = true;
+}
+
+let hasCustomToggleIcons;
 let showArrow;
 let hideArrow;
+
 template.innerHTML = `
 <head>
     <link rel="stylesheet" href="accordion.css" />
@@ -9,11 +30,6 @@ template.innerHTML = `
 </head>
 <div class="ptk-accordion-container" id="ptk-accordion-container">
 </div>`;
-const accordionData =
-  document.getElementById("ptk-accordion").dataset.accordion;
-const convertedData = JSON.parse(JSON.parse(JSON.stringify(accordionData)));
-const getAccordion = document.getElementById("ptk-accordion");
-const showMultiple = getAccordion.getAttribute("showMultiple");
 
 class ptfAccordion extends HTMLElement {
   constructor() {
@@ -21,18 +37,16 @@ class ptfAccordion extends HTMLElement {
     this.attachShadow({ mode: "open" });
     this.shadowRoot.appendChild(template.content.cloneNode(true));
   }
+
   connectedCallback() {
-    let getDefaultAccordionValue = this.getAttribute(
-      "showDefaultAccordionIndex"
-    ).trim();
     if (this.getAttribute("toggleIcons") == "true") {
-      hasCustomArrows = true;
+      hasCustomToggleIcons = true;
       this.render();
     } else if (this.getAttribute("toggleIcons") == "false") {
-      hasCustomArrows = false;
+      hasCustomToggleIcons = false;
       this.render();
     } else {
-      hasCustomArrows = false;
+      hasCustomToggleIcons = false;
       this.render();
     }
     if (getDefaultAccordionValue) {
@@ -53,7 +67,9 @@ class ptfAccordion extends HTMLElement {
       [getDefaultAccordionIndex].classList.add("active");
     this.shadowRoot.querySelectorAll("#togglers")[
       getDefaultAccordionIndex
-    ].innerHTML = "Hide";
+    ].innerHTML = hasCustomToggleIcons
+      ? `<slot name= 'hideArrow 0'></slot>`
+      : `Hide`;
   }
 
   render() {
@@ -78,7 +94,11 @@ class ptfAccordion extends HTMLElement {
       accordion.innerHTML = `
             <div class="accordion-head" id="accordion-head">
               <span><h1 class="header">${data.headerName}</h1></span>
-              <span class="togglers" id="togglers">Show</span>
+              <span class="togglers" id="togglers">${
+                hasCustomToggleIcons
+                  ? `<slot name= 'showArrow ${i}'></slot>`
+                  : `Show`
+              } </span>
             </div>
             <div class="accordion-data" id="accordion-data">
               <p class="data" id="data">${data.data}</p>
@@ -93,22 +113,46 @@ class ptfAccordion extends HTMLElement {
       toggler.addEventListener("click", () => {
         let getSelectedAccordionData =
           this.shadowRoot.querySelectorAll(".accordion-data");
-        let slots = document.getEle;
-        getSelectedAccordionData.forEach((accData, j) => {
-          if (j == i) {
-            accData.classList.toggle("active");
-            if (accData.classList.contains("active")) {
-              this.shadowRoot.querySelectorAll("#togglers")[j].innerHTML =
-                "Hide";
-            } else {
-              this.shadowRoot.querySelectorAll("#togglers")[j].innerHTML =
-                "Show";
-            }
+        if (showMultiple && showMultiple == "true") {
+          // if show Multiple
+          if (getSelectedAccordionData[i].classList.contains("active")) {
+            getSelectedAccordionData[i].classList.remove("active");
+            this.shadowRoot.querySelectorAll("#togglers")[i].innerHTML =
+              hasCustomToggleIcons
+                ? `<slot name= 'showArrow ${i}'></slot>`
+                : `Show`;
           } else {
-            accData.classList.remove("active");
-            this.shadowRoot.querySelectorAll("#togglers")[j].innerHTML = "Show";
+            getSelectedAccordionData[i].classList.add("active");
+            this.shadowRoot.querySelectorAll("#togglers")[i].innerHTML =
+              hasCustomToggleIcons
+                ? `<slot name= 'hideArrow ${i}'></slot>`
+                : `Hide`;
           }
-        });
+        } else {
+          // Show only one at a time
+          getSelectedAccordionData.forEach((accData, j) => {
+            if (j == i) {
+              accData.classList.toggle("active");
+              if (accData.classList.contains("active")) {
+                this.shadowRoot.querySelectorAll("#togglers")[j].innerHTML =
+                  hasCustomToggleIcons
+                    ? `<slot name= 'hideArrow ${i}'></slot>`
+                    : `Hide`;
+              } else {
+                this.shadowRoot.querySelectorAll("#togglers")[j].innerHTML =
+                  hasCustomToggleIcons
+                    ? `<slot name= 'showArrow ${i}'></slot>`
+                    : `Show`;
+              }
+            } else {
+              accData.classList.remove("active");
+              this.shadowRoot.querySelectorAll("#togglers")[j].innerHTML =
+                hasCustomToggleIcons
+                  ? `<slot name= 'showArrow ${j}'></slot>`
+                  : `Show`;
+            }
+          });
+        }
       });
     });
   }

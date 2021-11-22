@@ -1,6 +1,6 @@
 # ptk-accordion
 
-Lightweight and accessible accordion, With the script file in this project you can create accordion on your website.
+Lightweight and accessible accordion developed with pure Vanilla JavaScript, With the script file and accordion stylesheet in this project you can create accordion on your website.
 
 ## Installation
 
