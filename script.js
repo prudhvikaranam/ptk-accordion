@@ -19,6 +19,18 @@ if (getAccordion.hasAttribute("noTogglers")) {
   noTogglers = true;
 }
 
+let showAnimateDuration;
+let hideAnimateDuration;
+
+if(getAccordion.hasAttribute('showAnimateDuration')){
+  showAnimateDuration = getAccordion.getAttribute('showAnimateDuration');
+}
+
+if(getAccordion.hasAttribute('hideAnimateDuration')){
+  hideAnimateDuration = getAccordion.getAttribute('hideAnimateDuration');
+}
+
+
 let hasCustomToggleIcons;
 let showArrow;
 let hideArrow;
@@ -79,7 +91,7 @@ class ptfAccordion extends HTMLElement {
 
   render() {
     convertedData.forEach((data, i) => {
-      //Used for creating a the accordion along with the togglers.
+      //Used for creating the accordion along with the adding multiple togglers.
       let createMultipleShowArrowSlots = getAccordion.appendChild(
         document.createElement("div")
       );
@@ -121,6 +133,7 @@ class ptfAccordion extends HTMLElement {
         if (showMultiple && showMultiple == "true") {
           // if show Multiple
           if (getSelectedAccordionData[i].classList.contains("active")) {
+            getSelectedAccordionData[i].style.transition = hideAnimateDuration;
             getSelectedAccordionData[i].classList.remove("active");
             this.shadowRoot.querySelectorAll("#togglers")[i].innerHTML =
               hasCustomToggleIcons
@@ -128,6 +141,7 @@ class ptfAccordion extends HTMLElement {
                 : `Show`;
           } else {
             getSelectedAccordionData[i].classList.add("active");
+            getSelectedAccordionData[i].style.transition = showAnimateDuration;
             this.shadowRoot.querySelectorAll("#togglers")[i].innerHTML =
               hasCustomToggleIcons
                 ? `<slot name= 'hideArrow ${i}'></slot>`
@@ -143,11 +157,14 @@ class ptfAccordion extends HTMLElement {
                   hasCustomToggleIcons
                     ? `<slot name= 'hideArrow ${i}'></slot>`
                     : `Hide`;
+                    getSelectedAccordionData[i].style.transition = showAnimateDuration;
+
               } else {
                 this.shadowRoot.querySelectorAll("#togglers")[j].innerHTML =
                   hasCustomToggleIcons
                     ? `<slot name= 'showArrow ${i}'></slot>`
                     : `Show`;
+                    getSelectedAccordionData[i].style.transition = hideAnimateDuration;
               }
             } else {
               accData.classList.remove("active");
@@ -155,6 +172,7 @@ class ptfAccordion extends HTMLElement {
                 hasCustomToggleIcons
                   ? `<slot name= 'showArrow ${j}'></slot>`
                   : `Show`;
+                  getSelectedAccordionData[j].style.transition = hideAnimateDuration;
             }
           });
         }
