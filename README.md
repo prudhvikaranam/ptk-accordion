@@ -36,10 +36,15 @@ Provide data to the **data-accordion** tag in the below **format**
 
 # Attributes
 
-Attempt | #1 | #2 | #3 | #4 | #5 | #6 | #7 | #8 | #9 | #10 | #11
---- | --- | --- | --- |--- |--- |--- |--- |--- |--- |--- |---
-Seconds | 301 | 283 | 290 | 286 | 289 | 285 | 287 | 287 | 272 | 276 | 269
-
+Attribute | value | Additional information
+--- | --- | --
+showDefaultAccordionIndex | "1" | (Optional ) Index value based on the JSON structure provided to data-accordion, Opens the accordion data by default when accordion is loaded.
+showMultiple | "true"/"false" | (Optional ) If value is "true" multiple accordion data's can be opened else only one will be opened.
+toggleIcons | "true"/"false" | (Optional ) If value is "true" then custom icons can be added using **showArrow** and **hideArrow** attributes
+showArrow | "icon tag"  | (**Mandatory if toggleIcons value is true**) example : `'<i class="fa fa-angle-down custom"></i>'`
+hideArrow | "icon tag"  | (**Mandatory if toggleIcons value is true**) example : `'<i class="fa fa-angle-up custom"></i>'`
+showAnimateDuration | "1s"  | (Optional) Animation duration to open the accordion data
+hideAnimateDuration | "1s"  | (Optional) Animation duration to close the accordion data
 
 ```
 Development is still in progress.........
