@@ -10,7 +10,7 @@ if (getAccordion.hasAttribute("showDefaultAccordionIndex")) {
     .trim();
 }
 
-let showMultiple; //hold the default accordion value
+let showMultiple = false; //hold the default multiple value
 if (getAccordion.hasAttribute("showMultiple")) {
   showMultiple = getAccordion.getAttribute("showMultiple");
 }
@@ -42,6 +42,11 @@ class ptfAccordion extends HTMLElement {
     if (this.getAttribute("toggleIcons") == "true") {
       hasCustomToggleIcons = true;
       this.render();
+      if (!this.hasAttribute("showArrow") || !this.hasAttribute("hideArrow")) {
+        console.error(
+          "You have set toggle Icons attribute to TRUE but no values has been provided  either to showArrow or hideArrow; Please refer documentation for additional information"
+        );
+      }
     } else if (this.getAttribute("toggleIcons") == "false") {
       hasCustomToggleIcons = false;
       this.render();
@@ -53,7 +58,7 @@ class ptfAccordion extends HTMLElement {
       this.openDefault();
     } else if (getDefaultAccordionValue == "") {
       console.warn(
-        `Warning: showDefaultAccordionIndex attribute has be defined but no value has been assigned`
+        `Warning: showDefaultAccordionIndex attribute has be defined but no value has been assigned; Please refer documentation for additional information`
       );
     }
   }
@@ -68,7 +73,7 @@ class ptfAccordion extends HTMLElement {
     this.shadowRoot.querySelectorAll("#togglers")[
       getDefaultAccordionIndex
     ].innerHTML = hasCustomToggleIcons
-      ? `<slot name= 'hideArrow 0'></slot>`
+      ? `<slot name= 'hideArrow ${getDefaultAccordionIndex}'></slot>`
       : `Hide`;
   }
 
