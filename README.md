@@ -46,9 +46,7 @@ hideArrow | "icon tag"  | (**Mandatory if toggleIcons value is true**) example :
 showAnimateDuration | "1s"  | (Optional) Animation duration to open the accordion data
 hideAnimateDuration | "1s"  | (Optional) Animation duration to close the accordion data
 
-```
-Development is still in progress.........
-```
+
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
